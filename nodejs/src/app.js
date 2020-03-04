@@ -21,4 +21,16 @@ app.post('/users/:id', (req, res) => {
   res.send('updated')
 })
 
+app.use('*', (req, res, next) => {
+  console.error('uh oh, someone hit an endpoint that doesnt exist')
+  res.status(404)
+  res.send('uh oh, someone hit an endpoint that doesnt exist')
+})
+
+app.use((err, req, res, next) => {
+  console.error(`uh oh, an error happened! ${err.message} at ${err.stack}`)
+  res.status(500)
+  res.send()
+})
+
 module.exports = app

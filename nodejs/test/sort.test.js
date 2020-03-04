@@ -1,6 +1,7 @@
 const fc = require('fast-check')
 
-describe('sort', () => {
+// These are just here to play around with if you want
+describe.skip('sort', () => {
   it('sorts a simple array of 2, 3, 1', () => {
     const myArray = [2, 3, 1]
     expect(sort(myArray)).toEqual([1, 2, 3])
