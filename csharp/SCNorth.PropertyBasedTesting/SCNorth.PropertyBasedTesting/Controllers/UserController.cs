@@ -35,7 +35,7 @@ namespace SCNorth.PropertyBasedTesting.Controllers
 			var user = JsonConvert.DeserializeObject<IEnumerable<User>>(jsonData).FirstOrDefault(x => x.Id == id);
 			if (user == null)
 			{
-				return NotFound();
+				throw new KeyNotFoundException();
 			}
 
 			return user;
@@ -54,7 +54,12 @@ namespace SCNorth.PropertyBasedTesting.Controllers
 			newUser.Id = id;
 
 			var jsonData = GetJsonData(UsersPath);
-			var users = JsonConvert.DeserializeObject<IEnumerable<User>>(jsonData);
+			var users = JsonConvert.DeserializeObject<IEnumerable<User>>(jsonData).ToList();
+
+			if (users.FirstOrDefault(x => x.Id == id) == null)
+			{
+				throw new KeyNotFoundException();
+			}
 
 			SaveJsonData(UsersPath, JsonConvert.SerializeObject(UpdateUser(users, newUser)));
 
